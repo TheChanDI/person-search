@@ -1,9 +1,9 @@
 // app/components/navbar.tsx
-'use client'
+"use client";
 
-import Link from 'next/link';
-import { Search, Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import Link from "next/link";
+import { Search, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
@@ -16,20 +16,28 @@ export default function Navbar() {
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center">
               <Search className="h-8 w-8 text-primary" aria-hidden="true" />
-              <span className="ml-2 text-lg font-semibold text-foreground">Person Search</span>
+              <span className="ml-2 text-lg font-semibold text-foreground">
+                Person Search Website
+              </span>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <Link href="/" className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+            <Link
+              href="/"
+              className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+            >
               Home
             </Link>
-            <Link href="/about" className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+            <Link
+              href="/about"
+              className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+            >
               About
             </Link>
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
             >
               <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

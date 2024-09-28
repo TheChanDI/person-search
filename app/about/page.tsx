@@ -1,10 +1,10 @@
 // app/about/page.tsx
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Twitter } from 'lucide-react'
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Twitter } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -17,16 +17,19 @@ export default function AboutPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-4">
-              Person Search is a demonstration project showcasing the power of Next.js, React, and modern web technologies. 
-              It provides a simple yet effective interface for searching and displaying user information.
+              Person Search is a demonstration project showcasing the power of
+              Next.js, React, and modern web technologies. It provides a simple
+              yet effective interface for searching and displaying user
+              information.
             </p>
             <p className="mb-4">
-              This project utilizes Next.js 14 with the App Router, React 18, TypeScript, and a variety of 
-              cutting-edge libraries to create a responsive and accessible user experience.
+              This project utilizes Next.js 14 with the App Router, React 18,
+              TypeScript, and a variety of cutting-edge libraries to create a
+              responsive and accessible user experience.
             </p>
             <p>
-              Key features include asynchronous search functionality, server-side filtering, 
-              and a dark mode toggle for user comfort.
+              Key features include asynchronous search functionality,
+              server-side filtering, and a dark mode toggle for user comfort.
             </p>
           </CardContent>
         </Card>
@@ -37,21 +40,32 @@ export default function AboutPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-4">
-              Hi, I&apos;m <code>Callum Bir</code>, the developer behind Person Search. I&apos;m passionate about creating 
-              efficient, user-friendly web applications using the latest technologies.
+              Hi, I&apos;m <code>Callum Bir</code>, the developer behind Person
+              Search. I&apos;m passionate about creating efficient,
+              user-friendly web applications using the latest technologies.
             </p>
             <p className="mb-4">
-              This project serves as a demonstration of my skills in Next.js, React, and modern frontend development.
-              I&apos;m always looking to learn and improve, so feel free to reach out with any questions or feedback!
+              This project serves as a demonstration of my skills in Next.js,
+              React, and modern frontend development. I&apos;m always looking to
+              learn and improve, so feel free to reach out with any questions or
+              feedback!
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild>
-                <Link href="https://www.linkedin.com/in/callumbir/" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href="https://www.linkedin.com/in/callumbir/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
                 </Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="https://github.com/gocallum" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href="https://github.com/gocallum"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Github className="mr-2 h-4 w-4" /> GitHub
                 </Link>
               </Button>
@@ -65,11 +79,9 @@ export default function AboutPage() {
         </Card>
 
         <Button asChild variant="link" className="mt-4">
-          <Link href="/">
-            Back to Home
-          </Link>
+          <Link href="/">Back to Home</Link>
         </Button>
       </main>
     </div>
-  )
+  );
 }
