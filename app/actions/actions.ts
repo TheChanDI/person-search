@@ -1,7 +1,7 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import { userSchema, userFormSchema } from "./schemas";
+import { userFormSchema } from "./schemas";
 import type { User, UserFormData } from "./schemas";
 import { revalidatePath } from "next/cache";
 
