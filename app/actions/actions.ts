@@ -1,27 +1,55 @@
-// app/actions.ts
-'use server'
+"use server";
 
-import { User, userSchema } from './schemas'
+import { PrismaClient } from "@prisma/client";
+import { userSchema, userFormSchema } from "./schemas";
+import type { User, UserFormData } from "./schemas";
+import { revalidatePath } from "next/cache";
 
-const users: User[] = [
-    { id: '1', name: 'John Doe', phoneNumber: '123-456-7890', email: 'john@example.com' },
-    { id: '2', name: 'Jane Smith', phoneNumber: '234-567-8901', email: 'jane@example.com' },
-    { id: '3', name: 'Alice Johnson', phoneNumber: '345-678-9012', email: 'alice@example.com' },
-    { id: '4', name: 'Bob Williams', phoneNumber: '456-789-0123', email: 'bob@example.com' },
-    { id: '5', name: 'Charlie Brown', phoneNumber: '567-890-1234', email: 'charlie@example.com' },
-]
+const prisma = new PrismaClient();
 
+/**
+ * Search for users whose names start with the given query (case-insensitive).
+ */
 export async function searchUsers(query: string): Promise<User[]> {
-//   const users = await getUsers()
-  console.log('Searching users with query:', query)
-  return users.filter(user => user.name.toLowerCase().startsWith(query.toLowerCase()))
+  console.log("Searching users with query:", query);
+  const users = await prisma.user.findMany({
+    where: {
+      name: {
+        startsWith: query,
+        mode: "insensitive",
+      },
+    },
+  });
+  return users;
 }
 
-export async function addUser(data: Omit<User, 'id'>): Promise<User> {
-//   const users = await getUsers() // Load current users
-  const newId = (users.length + 1).toString()
-  const newUser = { ...data, id: newId }
-  const validatedUser = userSchema.parse(newUser)
-  users.push(validatedUser)
-  return validatedUser
+/**
+ * Add a new user to the database after validating the input data.
+ */
+export async function addUser(data: UserFormData): Promise<User> {
+  const validatedUser = userFormSchema.parse(data);
+  const newUser = await prisma.user.create({
+    data: validatedUser,
+  });
+  return newUser;
+}
+
+/**
+ * Edit an existing user in the database after validating the input data.
+ * @param id - The ID of the user to edit.
+ * @param data - The new data for the user.
+ */
+export async function editUser(id: string, data: UserFormData): Promise<User> {
+  // Validate the input data
+  const validatedData = userFormSchema.parse(data);
+
+  // Update the user in the database
+  const updatedUser = await prisma.user.update({
+    where: { id },
+    data: validatedData,
+  });
+
+  revalidatePath("/");
+
+  return updatedUser;
 }
