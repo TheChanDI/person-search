@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import AsyncSelect from "react-select/async";
-import { searchUsers } from "@/app/actions/actions";
+import { deleteUser, searchUsers } from "@/app/actions/actions";
 import { UserCard } from "./user-card";
 import { User } from "@/app/actions/schemas";
 
@@ -25,6 +25,22 @@ export default function UserSearch() {
     setSelectedUser(option ? option.user : null);
   };
 
+  const handleDeleteUser = async (id: string) => {
+    try {
+      const deletedUser = await deleteUser(id);
+      return {
+        success: true,
+        message: `User ${deletedUser.name} deleted successfully`,
+        data: deletedUser,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: "Failed to delete user",
+      };
+    }
+  };
+
   return (
     <div className="space-y-6">
       <AsyncSelect
@@ -34,7 +50,9 @@ export default function UserSearch() {
         placeholder="Search for a user..."
         className="w-full max-w-md mx-auto"
       />
-      {selectedUser && <UserCard user={selectedUser} />}
+      {selectedUser && (
+        <UserCard onDelete={(id) => handleDeleteUser(id)} user={selectedUser} />
+      )}
     </div>
   );
 }

@@ -53,3 +53,8 @@ export async function editUser(id: string, data: UserFormData): Promise<User> {
 
   return updatedUser;
 }
+
+export async function deleteUser(id: string): Promise<User> {
+  const deletedUser = await prisma.user.delete({ where: { id } });
+  return deletedUser;
+}

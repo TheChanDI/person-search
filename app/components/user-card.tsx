@@ -4,12 +4,26 @@ import { Badge } from "@/components/ui/badge";
 import { Phone, Mail } from "lucide-react";
 import { EditUserDialog } from "./edit-user-dialog";
 import { User } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { ActionState } from "@/components/mutable-dialog";
+import { toast } from "sonner";
 
 interface UserCardProps {
   user: User;
+  onDelete: (id: string) => Promise<ActionState<User>>;
 }
 
-export function UserCard({ user }: UserCardProps) {
+export function UserCard({ user, onDelete }: UserCardProps) {
+  const handleDelete = async () => {
+    const data = await onDelete(user.id);
+
+    if (data.success) {
+      toast(data.message);
+    } else {
+      toast(data.message);
+    }
+  };
+
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="flex flex-row items-center gap-4">
@@ -43,9 +57,13 @@ export function UserCard({ user }: UserCardProps) {
             <span>{user.email}</span>
           </div>
         )}
-
-        <div className="mt-4">
+        <div className="mt-4 flex gap-x-3">
           <EditUserDialog user={user} />
+          <div>
+            <Button onClick={handleDelete} variant="destructive">
+              Delete
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>
