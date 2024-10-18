@@ -5,6 +5,7 @@ import AsyncSelect from "react-select/async";
 import { deleteUser, searchUsers } from "@/app/actions/actions";
 import { UserCard } from "./user-card";
 import { User } from "@/app/actions/schemas";
+import { SelectInstance } from "react-select";
 
 // Option type remains the same
 interface Option {
@@ -15,7 +16,7 @@ interface Option {
 
 export default function UserSearch() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const selectRef = useRef<any>(null);
+  const selectRef = useRef<SelectInstance<Option, false>>(null);
 
   const loadOptions = async (inputValue: string): Promise<Option[]> => {
     const users = await searchUsers(inputValue);
@@ -27,7 +28,9 @@ export default function UserSearch() {
   };
 
   const handleDeleteUser = async (id: string) => {
-    selectRef.current.clearValue();
+    if (selectRef.current) {
+      selectRef.current.clearValue(); // Access clearValue method
+    }
     try {
       const deletedUser = await deleteUser(id);
       console.log("deletedUser", deleteUser);
