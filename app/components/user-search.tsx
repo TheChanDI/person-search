@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AsyncSelect from "react-select/async";
 import { deleteUser, searchUsers } from "@/app/actions/actions";
 import { UserCard } from "./user-card";
@@ -15,6 +15,7 @@ interface Option {
 
 export default function UserSearch() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const selectRef = useRef<any>(null);
 
   const loadOptions = async (inputValue: string): Promise<Option[]> => {
     const users = await searchUsers(inputValue);
@@ -26,8 +27,10 @@ export default function UserSearch() {
   };
 
   const handleDeleteUser = async (id: string) => {
+    selectRef.current.clearValue();
     try {
       const deletedUser = await deleteUser(id);
+      console.log("deletedUser", deleteUser);
       return {
         success: true,
         message: `User ${deletedUser.name} deleted successfully`,
@@ -49,6 +52,7 @@ export default function UserSearch() {
         onChange={handleChange}
         placeholder="Search for a user..."
         className="w-full max-w-md mx-auto"
+        ref={selectRef}
       />
       {selectedUser && (
         <UserCard onDelete={(id) => handleDeleteUser(id)} user={selectedUser} />
