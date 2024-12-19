@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <h1>FUCK YOU !!!</h1>
+        <h1>FUCK YOU FISHBOWL !!!</h1>
         {/* <Navbar />
         <main className="flex-grow">{children}</main>
         <Toaster />
