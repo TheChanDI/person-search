@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +8,7 @@ import { EditUserDialog } from "./edit-user-dialog";
 import { User } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { ActionState } from "@/components/mutable-dialog";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 
 interface UserCardProps {
   user: User;
@@ -14,13 +16,15 @@ interface UserCardProps {
 }
 
 export function UserCard({ user, onDelete }: UserCardProps) {
+  const { toast } = useToast();
+
   const handleDelete = async () => {
     const data = await onDelete(user.id);
 
     if (data.success) {
-      toast(data.message);
+      toast({ title: "Success", description: data.message });
     } else {
-      toast(data.message);
+      toast({ title: "Error", description: data.message });
     }
   };
 
